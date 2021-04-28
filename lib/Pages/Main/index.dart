@@ -7,87 +7,69 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  final _suggestions = <String>["赵", "钱", "李", "a", "b", "c", "d"];
-
-  final _saved = new Set<String>();
-
-  final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold (
-      appBar: new AppBar(
-        title: new Text('hei boy'),
-        actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.list), onPressed: _pushSaved),
+    Widget titleSection = new Container(
+      padding: const EdgeInsets.all(32.0),
+      child: new Row(
+        children: [
+          new Expanded(
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                new Container(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: new Text(
+                    '木叶十二忍',
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                new Text(
+                  '第七班, 第三班, 第十班, 第八班',
+                  style: new TextStyle(
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          new Icon(
+            Icons.star,
+            color: Colors.red[500],
+          ),
+          new Text('12'),
         ],
       ),
-      body: _buildSuggestions(),
     );
-  }
 
-  Widget _buildSuggestions() {
-    return new ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      itemCount: 7,
-      itemBuilder: (context, i) {
-        if (i.isOdd) return new Divider();
-        return _buildRow(_suggestions[i]);
-      }
-    );
-  }
-
-  Widget _buildRow(String listHi) {
-    final alreadySaved = _saved.contains(listHi);
-    return new ListTile(
-      title: new Text(
-        listHi,
-        style: _biggerFont,
+    Widget textSection = new Container(
+      padding: const EdgeInsets.all(32.0),
+      child: new Text(
+        '''
+          木叶12小强是指“第七班”“第三班”“第八班”“第十班”共十二名年轻忍者，成员分别是：漩涡鸣人、宇智波佐助、春野樱、日向宁次、李洛克、天天、日向雏田、犬冢牙、油女志乃、奈良鹿丸、秋道丁次、山中井野。
+        ''',
+        softWrap: true,
       ),
-      trailing: new Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(listHi);
-          } else {
-            _saved.add(listHi);
-          }
-        });
-      },
     );
-  }
 
-  void _pushSaved() {
-    Navigator.of(context).push(
-      new MaterialPageRoute(
-        builder: (context) {
-          final tiles = _saved.map(
-            (listHi) {
-              return new ListTile(
-                title: new Text(
-                  listHi,
-                  style: _biggerFont,
-                ),
-              );
-            },
-          );
-          final divided = ListTile
-            .divideTiles(
-              context: context,
-              tiles: tiles,
-            )
-            .toList();
-
-            return new Scaffold(
-              appBar: new AppBar(
-                title: new Text('Saved Suggestions'),
-              ),
-              body: new ListView(children: divided),
-            );
-        },
+    return new SafeArea(
+      top: false,
+      child: Scaffold(
+        body: new Column(
+          children: [
+            Image.asset(
+              'assets/images/lake.jpg',
+              width: MediaQuery.of(context).size.width,
+              height: 240,
+              fit: BoxFit.cover,
+            ),
+            titleSection,
+            textSection,
+          ],
+        ),
       ),
     );
   }

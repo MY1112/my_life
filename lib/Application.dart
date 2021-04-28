@@ -5,7 +5,10 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Hi ET',
+      title: 'one day',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: new Main(),
     );
   }
